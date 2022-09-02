@@ -42,8 +42,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MyApp() {
 
-        Text(text = viewModel.schools.toString())
-        //SchoolList(schools = viewModel.schools, onClicked = { /*TODO*/ }, viewModel = viewModel)
+        //Text(text = viewModel.schools.toString())
+        SchoolList(schools = viewModel.schools, onClicked = { /*TODO*/ }, viewModel = viewModel)
     }
 }
 
