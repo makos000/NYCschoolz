@@ -1,9 +1,11 @@
 package com.example.nycschoolz
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.nycschoolz.models.SchoolModelItemModel
 import com.example.nycschoolz.repo.RepoInterface
 import com.example.nycschoolz.repo.RepoLocal
@@ -18,21 +20,53 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(val schoolDAO: SchoolDAO, val repoLocal: RepoLocal, val repoInterface: RepoInterface): ViewModel(){
     var schools: List<SchoolModelItemModel> by mutableStateOf(listOf())
+    var data_DB = listOf<SchoolEntity>()
+    var schoolList = mutableStateListOf<SchoolModelItemModel>()
+    var schoolForDS = SchoolModelItemModel()
 
     fun getAllSchools(){
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val school_list = repoInterface.getSchools()
+                schools = school_list
                 if(school_list.isNotEmpty()){
                     nukeData()
-                    schools = school_list
-                    //insertIntoDatabase(school_list as ArrayList<SchoolModelItemModel>)
+                    //
+                    insertIntoDatabase(school_list as ArrayList<SchoolModelItemModel>)
                 }
             }catch (e: Error){
                 Error(e)
             }
 
 
+        }
+    }
+
+    fun getDataFromDB() {
+        CoroutineScope(Dispatchers.IO).launch(){
+            viewModelScope.launch {
+                repoLocal.readSchoolsFromDB().collect { response ->
+                    data_DB = response
+                    putDataInList()
+                }
+            }
+        }
+    }
+
+    fun putDataInList(){
+        if (data_DB.isNotEmpty()){
+            var school = data_DB[0].schoolEntity
+
+            for (item in school){
+                schoolList.add(
+                    SchoolModelItemModel(
+                        item.academicopportunities1,item.boro,item.buildingCode,item.dbn,
+                        item.bus,item.campusName,item.city,item.location,item.neighborhood,
+                        item.overviewParagraph,item.phoneNumber,item.schoolEmail,item.schoolName,
+                        item.subway,item.totalStudents,item.website,item.zip
+                    )
+                )
+            }
         }
     }
 

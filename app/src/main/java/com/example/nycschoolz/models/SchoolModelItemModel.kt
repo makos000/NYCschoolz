@@ -17,35 +17,37 @@ import com.google.gson.annotations.SerializedName
 
 data class SchoolModelItemModel(
     @SerializedName("academicopportunities1")
-    val academicopportunities1: String,
+    val academicopportunities1: String? = "",
     @SerializedName("boro")
-    val boro: String,
+    val boro: String? = "",
     @SerializedName("building_code")
-    val buildingCode: String,
+    val buildingCode: String? = "",
+    @SerializedName("dbn")
+    val dbn: String? = "",
     @SerializedName("bus")
-    val bus: String,
+    val bus: String? = "",
     @SerializedName("campus_name")
-    val campusName: String,
+    val campusName: String? = "",
     @SerializedName("city")
-    val city: String,
+    val city: String? = "",
     @SerializedName("location")
-    val location: String,
+    val location: String? = "",
     @SerializedName("neighborhood")
-    val neighborhood: String,
+    val neighborhood: String? = "",
     @SerializedName("overview_paragraph")
-    val overviewParagraph: String,
+    val overviewParagraph: String? = "",
     @SerializedName("phone_number")
-    val phoneNumber: String,
+    val phoneNumber: String? = "",
     @SerializedName("school_email")
-    val schoolEmail: String,
+    val schoolEmail: String? = "",
     @SerializedName("school_name")
-    val schoolName: String,
+    val schoolName: String? = "",
     @SerializedName("subway")
-    val subway: String,
+    val subway: String? = "",
     @SerializedName("total_students")
-    val totalStudents: String,
+    val totalStudents: String? = "",
     @SerializedName("website")
-    val website: String,
+    val website: String? = "",
     @SerializedName("zip")
-    val zip: String
+    val zip: String? = ""
 )

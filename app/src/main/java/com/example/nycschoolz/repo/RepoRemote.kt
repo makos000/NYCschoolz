@@ -1,6 +1,7 @@
 package com.example.nycschoolz.repo
 
 import com.example.nycschoolz.api.ApiInterface
+import com.example.nycschoolz.models.SATsModelItem
 import com.example.nycschoolz.models.SchoolModelItemModel
 import javax.inject.Inject
 
@@ -8,5 +9,9 @@ class RepoRemote @Inject constructor(val apiInterface: ApiInterface): RepoInterf
 
     override suspend fun getSchools(): List<SchoolModelItemModel> {
         return apiInterface.getSchools()
+    }
+
+    override suspend fun getSATs(): List<SATsModelItem> {
+        return apiInterface.getSATs()
     }
 }
