@@ -7,5 +7,5 @@ interface RepoInterface {
 
     suspend fun getSchools(): List<SchoolModelItemModel>
 
-    suspend fun getSATs(): List<SATsModelItem>
+    suspend fun getSAT(string: String): List<SATsModelItem>
 }

@@ -11,7 +11,7 @@ class RepoRemote @Inject constructor(val apiInterface: ApiInterface): RepoInterf
         return apiInterface.getSchools()
     }
 
-    override suspend fun getSATs(): List<SATsModelItem> {
-        return apiInterface.getSATs()
+    override suspend fun getSAT(string: String): List<SATsModelItem> {
+        return apiInterface.getSAT(string = string)
     }
 }

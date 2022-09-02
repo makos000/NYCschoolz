@@ -11,6 +11,15 @@ package com.example.nycschoolz.models
  schoolname
  website
  requirement11
+
+ name
+ location
+ email
+ web
+ desc
+ city
+ buses
+ subway
   */
 
 import com.google.gson.annotations.SerializedName

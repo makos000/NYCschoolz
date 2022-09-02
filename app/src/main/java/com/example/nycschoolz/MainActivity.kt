@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.example.nycschoolz.ui.DetailScreen
 import com.example.nycschoolz.ui.SchoolList
 import com.example.nycschoolz.ui.theme.NYCschoolzTheme
@@ -41,7 +43,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NYCschoolzTheme {
-                MyApp()
+                Surface(modifier = Modifier.background(Color.Black)) {
+                    MyApp()
+                }
+
             }
         }
     }
@@ -57,12 +62,12 @@ class MainActivity : ComponentActivity() {
         } else {
             if (internet_bool) {
                 viewModel.getAllSchools()
-                SchoolList(schools = viewModel.schools, onClicked = { showDetail = true }, viewModel = viewModel)
+                SchoolList(schools = viewModel.schools, onClicked = { showDetail = true }, viewModel = viewModel,internet_bool)
             }
             else{
                 viewModel.getDataFromDB()
                 if (viewModel.schoolList.isNotEmpty()){
-                    SchoolList(schools = viewModel.schoolList, onClicked = {showDetail = true},viewModel)
+                    SchoolList(schools = viewModel.schoolList, onClicked = {showDetail = true},viewModel,internet_bool)
                 }
                 else{
                     Text(text = "You are offline")

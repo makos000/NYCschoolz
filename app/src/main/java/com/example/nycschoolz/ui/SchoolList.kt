@@ -22,13 +22,16 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SchoolList(schools: List<SchoolModelItemModel>, onClicked: () -> Unit, viewModel: MainViewModel) {
+fun SchoolList(schools: List<SchoolModelItemModel>, onClicked: () -> Unit, viewModel: MainViewModel, internet: Boolean) {
     //Text(text = viewModel.schools.toString())
     LazyColumn(){
         itemsIndexed(items = schools){
             index, item ->
             Card(onClick = {onClicked.invoke()
-                           viewModel.schoolForDS = item},
+                           viewModel.schoolForDS = item
+                            viewModel.sat = listOf()
+                            if (internet){ viewModel.getSAT(item.dbn!!) }
+                           },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),

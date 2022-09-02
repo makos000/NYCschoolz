@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.nycschoolz.models.SATsModelItem
 import com.example.nycschoolz.models.SchoolModelItemModel
 import com.example.nycschoolz.repo.RepoInterface
 import com.example.nycschoolz.repo.RepoLocal
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(val schoolDAO: SchoolDAO, val repoLocal: RepoLocal, val repoInterface: RepoInterface): ViewModel(){
     var schools: List<SchoolModelItemModel> by mutableStateOf(listOf())
+    var sat: List<SATsModelItem> by mutableStateOf(listOf())
     var data_DB = listOf<SchoolEntity>()
     var schoolList = mutableStateListOf<SchoolModelItemModel>()
     var schoolForDS = SchoolModelItemModel()
@@ -37,8 +39,17 @@ class MainViewModel @Inject constructor(val schoolDAO: SchoolDAO, val repoLocal:
             }catch (e: Error){
                 Error(e)
             }
+        }
+    }
 
-
+    fun getSAT(string: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val sat_list = repoInterface.getSAT(string)
+                sat = sat_list
+            }catch (e: Error){
+                Error(e)
+            }
         }
     }
 
