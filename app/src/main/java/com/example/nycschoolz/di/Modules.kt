@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import com.example.nycschoolz.api.ApiInterface
 import com.example.nycschoolz.api.ApiResources
+import com.example.nycschoolz.repo.LocalRepoInterface
 import com.example.nycschoolz.repo.RepoInterface
+import com.example.nycschoolz.repo.RepoLocal
 import com.example.nycschoolz.repo.RepoRemote
+import com.example.nycschoolz.room.SchoolDAO
 import com.example.nycschoolz.room.SchoolDatabase
 import com.google.gson.Gson
 import dagger.Module
@@ -56,6 +59,10 @@ class Modules {
     @Provides
     fun remoteRepo(apiInterface: ApiInterface): RepoInterface =
         RepoRemote(apiInterface = apiInterface)
+
+    @Provides
+    fun localRepo(schoolDAO: SchoolDAO): LocalRepoInterface =
+        RepoLocal(schoolDAO = schoolDAO)
 
     @Provides
     fun provideSchoolDatabase(

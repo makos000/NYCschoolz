@@ -2,12 +2,16 @@ package com.example.nycschoolz.repo
 
 import com.example.nycschoolz.room.SchoolDAO
 import com.example.nycschoolz.room.SchoolEntity
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class RepoLocal @Inject constructor(val schoolDAO: SchoolDAO){
+class RepoLocal @Inject constructor(val schoolDAO: SchoolDAO): LocalRepoInterface{
 
-    fun insertSchoolsToDB(schoolEntity: SchoolEntity) = schoolDAO.insertSchoolsToDB(schoolEntity)
+    override fun insertSchoolsToDB(schoolEntity: SchoolEntity) = schoolDAO.insertSchoolsToDB(schoolEntity)
 
-    fun readSchoolsFromDB() = schoolDAO.readSchoolsFromDB()
+    override fun readSchoolsFromDB(): Flow<List<SchoolEntity>> = schoolDAO.readSchoolsFromDB()
+
+
+    //override fun readSchoolsFromDB() = schoolDAO.readSchoolsFromDB()
 
 }

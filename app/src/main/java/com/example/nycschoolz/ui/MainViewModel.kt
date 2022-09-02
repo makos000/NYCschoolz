@@ -1,4 +1,4 @@
-package com.example.nycschoolz
+package com.example.nycschoolz.ui
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nycschoolz.models.SATsModelItem
 import com.example.nycschoolz.models.SchoolModelItemModel
+import com.example.nycschoolz.repo.LocalRepoInterface
 import com.example.nycschoolz.repo.RepoInterface
 import com.example.nycschoolz.repo.RepoLocal
 import com.example.nycschoolz.room.SchoolDAO
@@ -19,12 +20,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(val schoolDAO: SchoolDAO, val repoLocal: RepoLocal, val repoInterface: RepoInterface): ViewModel(){
+class MainViewModel @Inject constructor(val schoolDAO: SchoolDAO, val repoLocal: LocalRepoInterface, val repoInterface: RepoInterface): ViewModel(){
     var schools: List<SchoolModelItemModel> by mutableStateOf(listOf())
     var sat: List<SATsModelItem> by mutableStateOf(listOf())
     var data_DB = listOf<SchoolEntity>()
     var schoolList = mutableStateListOf<SchoolModelItemModel>()
     var schoolForDS = SchoolModelItemModel()
+    var loaded = false
 
     fun getAllSchools(){
         CoroutineScope(Dispatchers.IO).launch {
@@ -83,9 +85,9 @@ class MainViewModel @Inject constructor(val schoolDAO: SchoolDAO, val repoLocal:
 
     fun insertIntoDatabase(model: ArrayList<SchoolModelItemModel>){
         val schoolEntity = SchoolEntity(model)
-        CoroutineScope(Dispatchers.IO).launch {
-            schoolDAO.insertSchoolsToDB(schoolEntity)
-        }
+        schoolDAO.insertSchoolsToDB(schoolEntity)
+        //repoLocal.insertSchoolsToDB(schoolEntity)
+
     }
 
     fun nukeData(){
